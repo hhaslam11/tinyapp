@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = 8080;
 
@@ -11,6 +12,7 @@ const urlDatabase = {
 //setup app
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
 
 /**
  * Generate a unique ID
@@ -32,7 +34,7 @@ const generateUID = length => {
 // ===============================================
 // website root
 app.get('/', (req, res) => {
-  res.send('Hello!');
+  res.redirect('/urls');
 });
 
 //url object as json string
@@ -42,20 +44,22 @@ app.get('/urls.json', (req, res) => {
 
 //urls page. lists all urls, gives option to edit/delete
 app.get('/urls', (req, res) => {
-  const templateVars = { urls: urlDatabase };
+  const templateVars = { urls: urlDatabase,  username: req.cookies['username'] };
   res.render('urls_index', templateVars);
 });
 
 //create a new url
 app.get('/urls/new', (req, res) => {
-  res.render('urls_new');
+  const templateVars = { username: req.cookies['username'] };
+  res.render('urls_new', templateVars);
 });
 
 //shows specific url, lets user edit it from here
 app.get('/urls/:shortURL', (req, res) => {
-  let templateVars = {
+  const templateVars = {
     shortURL: req.params.shortURL,
-    longURL: urlDatabase[req.params.shortURL]
+    longURL: urlDatabase[req.params.shortURL],
+    username: req.cookies['username']
   };
   res.render('urls_show', templateVars);
 });
@@ -80,13 +84,25 @@ app.post('/urls/:id', (req, res) => {
   res.redirect('/urls');
 });
 
-
+//creates new url
 app.post('/urls', (req, res) => {
   const uid = generateUID(6);
-  console.log(req.body);
   urlDatabase[uid] = req.body.longURL;
   res.redirect(`/urls/${uid}`);
 });
+
+//login form
+app.post('/login', (req, res) => {
+  res.cookie('username', req.body.username);
+  res.redirect('/urls');
+});
+
+//logout
+app.post('/logout', (req, res) => {
+  res.clearCookie('username');
+  res.redirect('/urls');
+});
+
 
 //starts listening
 app.listen(PORT, () => {
