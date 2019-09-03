@@ -8,6 +8,7 @@ const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
+const users = require('./users');
 
 //setup app
 app.set('view engine', 'ejs');
@@ -64,6 +65,12 @@ app.get('/urls/:shortURL', (req, res) => {
   res.render('urls_show', templateVars);
 });
 
+//user registration page
+app.get('/register', (req, res) => {
+  const templateVars = { username: req.cookies['username'] };
+  res.render('register', templateVars);
+});
+
 //redirect user to full url
 app.get('/u/:url', (req, res) => {
   res.redirect(urlDatabase[req.params.url]);
@@ -101,6 +108,23 @@ app.post('/login', (req, res) => {
 app.post('/logout', (req, res) => {
   res.clearCookie('username');
   res.redirect('/urls');
+});
+
+//register new user
+app.post('/register', (req, res) => {
+  const uid = generateUID(6);
+  console.log(req.body);
+  users[uid] = {
+    id: uid,
+    email: req.body.email,
+    password: req.body.password
+  };
+  res.redirect('/users');
+});
+
+//TEMP CODE, DELETE SOON
+app.get('/users', (req, res) => {
+  res.json(users);
 });
 
 
