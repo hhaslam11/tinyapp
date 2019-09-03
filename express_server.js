@@ -12,6 +12,17 @@ const urlDatabase = {
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 
+
+const generateUID = length => {
+  const chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
+  let returnString = '';
+
+  for (let i = 0; i < length; i++) {
+    returnString += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return returnString;
+};
+
 app.get('/', (req, res) => {
   res.send('Hello!');
 });
@@ -37,8 +48,10 @@ app.get('/urls/:shortURL', (req, res) => {
 });
 
 app.post('/urls', (req, res) => {
+  const uid = generateUID(6);
   console.log(req.body);
-  res.send('Thanks babe');
+  urlDatabase[uid] = req.body.longURL;
+  res.redirect(`/urls/${uid}`);
 });
 
 app.listen(PORT, () => {
