@@ -85,10 +85,16 @@ app.post('/urls/:id', (req, res) => {
 //creates new url
 app.post('/urls', (req, res) => {
   const uid = generateUID(6);
-  console.log(req.body);
   urlDatabase[uid] = req.body.longURL;
   res.redirect(`/urls/${uid}`);
 });
+
+//login form
+app.post('/login', (req, res) => {
+  res.cookie('username', req.body.username);
+  res.redirect('/urls');
+});
+
 
 //starts listening
 app.listen(PORT, () => {
