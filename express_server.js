@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = 8080;
 
@@ -11,6 +12,7 @@ const urlDatabase = {
 //setup app
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
 
 /**
  * Generate a unique ID
