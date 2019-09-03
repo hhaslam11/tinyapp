@@ -13,12 +13,24 @@
       </div>
     </div>
 
+    <% if (!username) { %>
     <!-- Login form -->
-    <div class="form-inline my-2 my-lg-0">
+    <div class="form-inline">
       <form action="/login" method="POST">
         <input class="form-control" type="text" placeholder="Username" name="username">
         <button class="btn btn-primary" type="submit">Login</button>
       </form>
     </div>
+    <% } else { %>
+    <!-- Logout form -->
+    <div class="form-inline">
+      <form action="/logout" method="POST">
+        <span class="navbar-text">
+          <%= username %>
+        </span>
+        <button class="btn btn-primary" type="submit">Logout</button>
+      </form>
+    </div>
+    <% } %>
   </nav>
 </header>
