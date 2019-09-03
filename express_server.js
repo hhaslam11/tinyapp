@@ -80,7 +80,7 @@ app.post('/urls/:id', (req, res) => {
   res.redirect('/urls');
 });
 
-
+//creates new url
 app.post('/urls', (req, res) => {
   const uid = generateUID(6);
   console.log(req.body);
