@@ -30,6 +30,8 @@ const generateUID = length => {
   return returnString;
 };
 
+
+
 // ===============================================
 // ||               Get requests                ||
 // ===============================================
@@ -76,6 +78,12 @@ app.get('/register', (req, res) => {
   res.render('register', templateVars);
 });
 
+//login page
+app.get('/login', (req, res) => {
+  const templateVars = { userID: req.cookies.userID, users: users };
+  res.render('login', templateVars);
+});
+
 //redirect user to full url
 app.get('/u/:url', (req, res) => {
   res.redirect(urlDatabase[req.params.url]);
@@ -103,6 +111,13 @@ app.post('/urls', (req, res) => {
   res.redirect(`/urls/${uid}`);
 });
 
+//login
+app.post('/login', (req, res) => {
+  if (req.body.email) {
+
+  }
+});
+
 //logout
 app.post('/logout', (req, res) => {
   res.clearCookie('userID');
@@ -112,7 +127,6 @@ app.post('/logout', (req, res) => {
 //register new user
 app.post('/register', (req, res) => {
   const uid = generateUID(6);
-  console.log(req.body);
   users[uid] = {
     id: uid,
     email: req.body.email,
