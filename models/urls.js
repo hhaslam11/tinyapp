@@ -7,8 +7,10 @@ const urls = require('../database/urls');
  * @param {string} userID (optional) userID of the user who registered the url
  */
 const create = (shortURL, longURL, userID) => {
-  urls[shortURL].longURL = longURL;
-  urls[shortURL].userID = userID;
+  urls[shortURL] = {
+    longURL: longURL,
+    userID: userID
+  };
 };
 
 /**
