@@ -36,10 +36,10 @@ const remove = (shortURL) => {
  * @returns single url object if id is specified and found
  * @returns undefined if id is specified but no url with that id is found
  */
-const get = () => {
-  if (arguments) {
-    if (urls[arguments[0]]) {
-      return urls[arguments[0]];
+const get = key => {
+  if (key) {
+    if (urls[key]) {
+      return urls[key];
     } else {
       return undefined;
     }
