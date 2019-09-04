@@ -1,6 +1,6 @@
-const urlDatabase = require('../db_objects/urls');
-const users = require('../db_objects/users');
-const generateUID = require('../tools').generateUID;
+const urlDatabase = require('../database/urls');
+const users = require('../database/users');
+const generateUID = require('../helpers/tools').generateUID;
 
 const setupPages = app => {
   // ===============================================

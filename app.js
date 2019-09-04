@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const requestsUsers = require('./requests/users');
-const requestsUrls = require('./requests/urls');
+const requestsUsers = require('./controllers/users');
+const requestsUrls = require('./controllers/urls');
 
 const app = express();
 const PORT = 8080;
