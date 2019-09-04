@@ -39,6 +39,7 @@ const generateUID = length => {
  */
 const searchByEmail = (email, object) => {
   for (let key in object) {
+    console.log(email + ' === ' + object[key].email);
     if (object[key].email === email) {
       return object[key];
     }
@@ -131,11 +132,13 @@ app.post('/urls', (req, res) => {
 
 //login
 app.post('/login', (req, res) => {
-  const user = searchByEmail(req.body.email);
-  if (user) {
-    //ill come back to this ========================================
+  const user = searchByEmail(req.body.email, users);
+  console.log(user);
+  if (user && user.password === req.body.password) {
+    res.cookie('userID', user.id);
+    res.redirect('/urls');
   } else {
-    res.redirect('/login?&login_failed=true');
+    res.redirect('/login?login_failed=true');
   }
 });
 
