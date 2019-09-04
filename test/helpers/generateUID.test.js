@@ -16,6 +16,9 @@ describe('generateUID()', () => {
     assert.isUndefined(generateUID('five'));
   });
   it('should return undefined when passed a float', () => {
-    assert.isUndefined(generateUID(5));
+    assert.isUndefined(generateUID(5.5));
+  });
+  it('should return undefined when passed 0', () => {
+    assert.isUndefined(generateUID(0));
   });
 });
