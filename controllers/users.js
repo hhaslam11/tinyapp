@@ -1,5 +1,5 @@
-const users = require('../database/users');
 const generateUID = require('../helpers/generateUID');
+const users = require('../models/users');
 
 const setupPages = app => {
   // ===============================================
@@ -9,7 +9,7 @@ const setupPages = app => {
   app.get('/register', (req, res) => {
     const templateVars = {
       userID: req.cookies.userID,
-      users: users,
+      users: users.get(),
       query: req.query
     };
     res.render('register', templateVars);
@@ -19,7 +19,7 @@ const setupPages = app => {
   app.get('/login', (req, res) => {
     const templateVars = {
       userID: req.cookies.userID,
-      users: users,
+      users: users.get(),
       query: req.query
     };
     res.render('login', templateVars);
@@ -30,9 +30,8 @@ const setupPages = app => {
   // ===============================================
   //login
   app.post('/login', (req, res) => {
-    const user = searchByEmail(req.body.email, users);
-    console.log(user);
-    if (user && user.password === req.body.password) {
+    const user = users.searchByEmail(req.body.email);
+    if (user && users.authenticate(req.body.email, req.body.password)) {
       res.cookie('userID', user.id);
       res.redirect('/urls');
     } else {
@@ -50,15 +49,11 @@ const setupPages = app => {
   app.post('/register', (req, res) => {
     if (!req.body.email || !req.body.password) {
       res.redirect('/register?failed=true');
-    } else if (searchByEmail(req.body.email, users)) {
+    } else if (users.searchByEmail(req.body.email)) {
       res.redirect('/register?failed=true');
     } else {
       const uid = generateUID(6);
-      users[uid] = {
-        id: uid,
-        email: req.body.email,
-        password: req.body.password
-      };
+      users.register(uid, req.body.email, req.body.password);
       res.cookie('userID', uid);
       res.redirect('/urls');
     }
