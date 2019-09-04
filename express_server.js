@@ -30,7 +30,21 @@ const generateUID = length => {
   return returnString;
 };
 
-
+/**
+ * returns searches users by email
+ * @param {string} email email to search by
+ * @param {object} users database to search
+ * @returns a user object if user is found
+ * @returns false if no user is found
+ */
+const searchByEmail = (email, object) => {
+  for (let key in object) {
+    if (object[key].email === email) {
+      return object[key];
+    }
+  }
+  return false;
+};
 
 // ===============================================
 // ||               Get requests                ||
@@ -141,4 +155,3 @@ app.post('/register', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
-
