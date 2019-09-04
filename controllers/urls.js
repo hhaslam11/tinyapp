@@ -8,11 +8,6 @@ const setupPages = app => {
   // ||               Get requests                ||
   // ===============================================
 
-  //url object as json string
-  app.get('/urls.json', (req, res) => {
-    res.json(urls.get());
-  });
-
   //urls page. lists all urls, gives option to edit/delete
   app.get('/urls', (req, res) => {
     const templateVars = {
