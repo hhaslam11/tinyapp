@@ -94,7 +94,11 @@ app.get('/register', (req, res) => {
 
 //login page
 app.get('/login', (req, res) => {
-  const templateVars = { userID: req.cookies.userID, users: users };
+  const templateVars = {
+    userID: req.cookies.userID,
+    users: users,
+    query: req.query
+  };
   res.render('login', templateVars);
 });
 
@@ -127,8 +131,11 @@ app.post('/urls', (req, res) => {
 
 //login
 app.post('/login', (req, res) => {
-  if (req.body.email) {
-
+  const user = searchByEmail(req.body.email);
+  if (user) {
+    //ill come back to this ========================================
+  } else {
+    res.redirect('/login?&login_failed=true');
   }
 });
 
