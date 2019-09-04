@@ -1,5 +1,5 @@
 const users = require('../database/users');
-const { generateUID, searchByEmail } = require('../helpers/tools');
+const generateUID = require('../helpers/generateUID');
 
 const setupPages = app => {
   // ===============================================
