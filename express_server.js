@@ -4,11 +4,8 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = 8080;
 
-const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
-};
-const users = require('./users');
+const urlDatabase = require('./db_objects/urls');
+const users = require('./db_objects/users');
 
 //setup app
 app.set('view engine', 'ejs');
