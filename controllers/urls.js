@@ -28,7 +28,7 @@ const setupPages = app => {
   app.get('/urls/:shortURL', (req, res) => {
     const templateVars = {
       shortURL: req.params.shortURL,
-      longURL: urls.get(req.params.shortURL),
+      longURL: urls.get(req.params.shortURL).longURL,
       userID: req.cookies.userID,
       users: users
     };
