@@ -1,6 +1,6 @@
 const assert = require('chai').assert;
 
-const generateUID = require('../../helpers/generateUID').generateUID;
+const generateUID = require('../../helpers/generateUID');
 
 describe('generateUID()', () => {
   it('should generate string with the length of 5 when passed in 5', () => {
