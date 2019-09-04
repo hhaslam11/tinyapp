@@ -39,7 +39,6 @@ const generateUID = length => {
  */
 const searchByEmail = (email, object) => {
   for (let key in object) {
-    console.log(email + ' === ' + object[key].email);
     if (object[key].email === email) {
       return object[key];
     }
@@ -89,7 +88,11 @@ app.get('/urls/:shortURL', (req, res) => {
 
 //user registration page
 app.get('/register', (req, res) => {
-  const templateVars = { userID: req.cookies.userID, users: users };
+  const templateVars = {
+    userID: req.cookies.userID,
+    users: users,
+    query: req.query
+  };
   res.render('register', templateVars);
 });
 
@@ -150,16 +153,21 @@ app.post('/logout', (req, res) => {
 
 //register new user
 app.post('/register', (req, res) => {
-  const uid = generateUID(6);
-  users[uid] = {
-    id: uid,
-    email: req.body.email,
-    password: req.body.password
-  };
-  res.cookie('userID', uid);
-  res.redirect('/urls');
+  if (!req.body.email || !req.body.password) {
+    res.redirect('/register?failed=true');
+  } else if (searchByEmail(req.body.email, users)) {
+    res.redirect('/register?failed=true');
+  } else {
+    const uid = generateUID(6);
+    users[uid] = {
+      id: uid,
+      email: req.body.email,
+      password: req.body.password
+    };
+    res.cookie('userID', uid);
+    res.redirect('/urls');
+  }
 });
-
 
 //starts listening
 app.listen(PORT, () => {
