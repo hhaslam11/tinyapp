@@ -4,7 +4,7 @@
  * @returns a random ID using chars a-z and 0-9
  * @returns undefined if passed an invalid value
  */
-const generateUID = length => {
+module.exports = length => {
 
   //validate input
   if (!length) return undefined;
@@ -19,5 +19,3 @@ const generateUID = length => {
   }
   return returnString;
 };
-
-module.exports = { generateUID };
