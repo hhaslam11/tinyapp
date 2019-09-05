@@ -1,5 +1,5 @@
-# Heading Tiny app
-## A simple url shortener
+# Tiny app
+**A simple url shortener**
 
 
 Description
