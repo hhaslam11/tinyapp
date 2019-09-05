@@ -49,4 +49,16 @@ const get = key => {
   return urls;
 };
 
+/**
+ * @param {string} id userID that you want to get the urls for
+ * @returns array of urlKeys that the user has access to.
+ */
+const urlsForUser = id => {
+  const returnArr = [];
+  for (const key of urls) {
+    if (urls[key].userID === id) returnArr.push(key);
+  }
+  return returnArr();
+};
+
 module.exports = { create, edit, remove, get };
