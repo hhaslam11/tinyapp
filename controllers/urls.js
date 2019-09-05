@@ -19,7 +19,10 @@ const setupPages = app => {
 
   //create a new url
   app.get('/urls/new', (req, res) => {
-    const templateVars = { userID: req.cookies.userID, users: users.get() };
+    const templateVars = {
+      userID: req.cookies.userID,
+      users: users.get()
+    };
     res.render('urls_new', templateVars);
   });
 
@@ -62,9 +65,13 @@ const setupPages = app => {
 
   //creates new url
   app.post('/urls', (req, res) => {
-    const uid = generateUID(6);
-    urls.create(uid, req.body.longURL);
-    res.redirect(`/urls/${uid}`);
+    if (req.cookies.userID) {
+      const uid = generateUID(6);
+      urls.create(uid, req.body.longURL);
+      res.redirect(`/urls/${uid}`);
+    } else {
+      res.sendStatus(403);
+    }
   });
 
 };
