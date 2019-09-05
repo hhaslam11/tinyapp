@@ -1,4 +1,5 @@
 const users = require('../database/users');
+const bcrypt = require('bcrypt');
 
 /**
  * returns searches users by email
@@ -45,7 +46,7 @@ const authenticate = (email, password) => {
   
   const tempUser = searchByEmail(email);
   if (tempUser) {
-    return tempUser.password === password;
+    return bcrypt.compareSync(password, tempUser.password);
   }
 
   return false;

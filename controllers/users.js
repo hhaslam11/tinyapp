@@ -1,4 +1,5 @@
 const generateUID = require('../helpers/generateUID');
+const bcrypt = require('bcrypt');
 const users = require('../models/users');
 
 const setupPages = app => {
@@ -53,7 +54,7 @@ const setupPages = app => {
       res.redirect('/register?failed=true');
     } else {
       const uid = generateUID(6);
-      users.register(uid, req.body.email, req.body.password);
+      users.register(uid, req.body.email, bcrypt.hashSync(req.body.password, 10));
       res.cookie('userID', uid);
       res.redirect('/urls');
     }
