@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const requestsUsers = require('./controllers/users');
-const requestsUrls = require('./controllers/urls');
 
 const app = express();
 const PORT = 8080;
@@ -17,8 +15,7 @@ app.get('/', (req, res) => {
   res.redirect('/urls/new');
 });
 
-requestsUsers.setupPages(app);
-requestsUrls.setupPages(app);
+app.use(require('./controllers'));
 
 //starts listening
 app.listen(PORT, () => {
