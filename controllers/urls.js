@@ -53,14 +53,22 @@ const setupPages = app => {
 
   // deletes url
   app.post('/urls/:shortURL/delete', (req, res) => {
-    urls.remove(req.params.shortURL);
-    res.redirect('/urls');
+    if (req.cookies.userID) {
+      urls.remove(req.params.shortURL);
+      res.redirect('/urls');
+    } else {
+      res.sendStatus(403);
+    }
   });
 
   //edits existing url
   app.post('/urls/:id', (req, res) => {
-    urls.edit(req.params.id, req.body.longURL);
-    res.redirect('/urls');
+    if (req.cookies.userID) {
+      urls.edit(req.params.id, req.body.longURL);
+      res.redirect('/urls');
+    } else {
+      res.sendStatus(403);
+    }
   });
 
   //creates new url
