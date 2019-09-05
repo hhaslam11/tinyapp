@@ -27,14 +27,7 @@
     <% } else { %>
     <main style="margin: 1em;">
       <h3>You must be logged in to create a url</h3>
-      <div class="form-inline">
-        <form style="margin-left: 10px; margin-right: 10px" action="/register">
-          <button class="btn btn-primary" type="submit">Register</button>
-        </form>
-        <form style="margin-left: 10px; margin-right: 10px" action="/login">
-          <button class="btn btn-primary" type="submit">Login</button>
-        </form>
-      </div>
+      <% include partials/_login-register-buttons %>
     </main>
     <% } %>
     <!-- Bootstrap JS -->
