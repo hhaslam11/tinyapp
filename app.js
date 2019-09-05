@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 
 const app = express();
 const PORT = 8080;
@@ -8,7 +8,7 @@ const PORT = 8080;
 //setup app
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cookieParser());
+app.use(cookieSession());
 
 // website root
 app.get('/', (req, res) => {
