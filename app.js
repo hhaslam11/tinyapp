@@ -8,7 +8,10 @@ const PORT = 8080;
 //setup app
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cookieSession());
+app.use(cookieSession({
+  name: 'session',
+  keys: ['3124521']
+}));
 
 // website root
 app.get('/', (req, res) => {

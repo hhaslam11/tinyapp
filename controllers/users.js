@@ -12,7 +12,7 @@ const users = require('../models/users');
 //user registration page
 router.get('/register', (req, res) => {
   const templateVars = {
-    userID: req.cookies.userID,
+    userID: req.session.userID,
     users: users.get(),
     query: req.query
   };
@@ -22,7 +22,7 @@ router.get('/register', (req, res) => {
 //login page
 router.get('/login', (req, res) => {
   const templateVars = {
-    userID: req.cookies.userID,
+    userID: req.session.userID,
     users: users.get(),
     query: req.query
   };
@@ -36,7 +36,7 @@ router.get('/login', (req, res) => {
 router.post('/login', (req, res) => {
   const user = users.searchByEmail(req.body.email);
   if (user && users.authenticate(req.body.email, req.body.password)) {
-    res.cookie('userID', user.id);
+    req.session.userID = user.id;
     res.redirect('/urls');
   } else {
     res.redirect('/login?login_failed=true');
@@ -45,7 +45,7 @@ router.post('/login', (req, res) => {
 
 //logout
 router.post('/logout', (req, res) => {
-  res.clearCookie('userID');
+  req.session.userID = null;
   res.redirect('/urls');
 });
 
@@ -58,7 +58,7 @@ router.post('/register', (req, res) => {
   } else {
     const uid = generateUID(6);
     users.register(uid, req.body.email, bcrypt.hashSync(req.body.password, 10));
-    res.cookie('userID', uid);
+    req.session.userID = uid;
     res.redirect('/urls');
   }
 });

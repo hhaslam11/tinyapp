@@ -12,8 +12,8 @@ const urls = require('../models/urls');
 //urls page. lists all urls, gives option to edit/delete
 router.get('/urls', (req, res) => {
   const templateVars = {
-    urls: urls.urlsForUser(req.cookies.userID),
-    userID: req.cookies.userID,
+    urls: urls.urlsForUser(req.session.userID),
+    userID: req.session.userID,
     users: users.get(),
     urlDatabase: urls.get()
   };
@@ -23,7 +23,7 @@ router.get('/urls', (req, res) => {
 //create a new url
 router.get('/urls/new', (req, res) => {
   const templateVars = {
-    userID: req.cookies.userID,
+    userID: req.session.userID,
     users: users.get()
   };
   res.render('urls_new', templateVars);
@@ -39,7 +39,7 @@ router.get('/urls/:shortURL', (req, res) => {
   const templateVars = {
     shortURL: req.params.shortURL,
     longURL: urls.get(req.params.shortURL).longURL,
-    userID: req.cookies.userID,
+    userID: req.session.userID,
     users: users.get()
   };
   res.render('urls_show', templateVars);
@@ -56,7 +56,7 @@ router.get('/u/:url', (req, res) => {
 
 // deletes url
 router.post('/urls/:shortURL/delete', (req, res) => {
-  if (req.cookies.userID) {
+  if (req.session.userID) {
     urls.remove(req.params.shortURL);
     res.redirect('/urls');
   } else {
@@ -66,7 +66,7 @@ router.post('/urls/:shortURL/delete', (req, res) => {
 
 //edits existing url
 router.post('/urls/:id', (req, res) => {
-  if (req.cookies.userID) {
+  if (req.session.userID) {
     urls.edit(req.params.id, req.body.longURL);
     res.redirect('/urls');
   } else {
@@ -76,9 +76,9 @@ router.post('/urls/:id', (req, res) => {
 
 //creates new url
 router.post('/urls', (req, res) => {
-  if (req.cookies.userID) {
+  if (req.session.userID) {
     const uid = generateUID(6);
-    urls.create(uid, req.body.longURL, req.cookies.userID);
+    urls.create(uid, req.body.longURL, req.session.userID);
     res.redirect(`/urls/${uid}`);
   } else {
     res.sendStatus(403);
