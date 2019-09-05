@@ -14,7 +14,7 @@ app.use(cookieParser());
 
 // website root
 app.get('/', (req, res) => {
-  res.redirect('/urls');
+  res.redirect('/urls/new');
 });
 
 requestsUsers.setupPages(app);
