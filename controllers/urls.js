@@ -1,5 +1,4 @@
-// const urlDatabase = require('../database/urls');
-const users = require('../database/users');
+const users = require('../models/users');
 const generateUID = require('../helpers/generateUID');
 const urls = require('../models/urls');
 
@@ -13,14 +12,14 @@ const setupPages = app => {
     const templateVars = {
       urls: urls.get(),
       userID: req.cookies.userID,
-      users: users
+      users: users.get()
     };
     res.render('urls_index', templateVars);
   });
 
   //create a new url
   app.get('/urls/new', (req, res) => {
-    const templateVars = { userID: req.cookies.userID, users: users };
+    const templateVars = { userID: req.cookies.userID, users: users.get() };
     res.render('urls_new', templateVars);
   });
 
@@ -35,7 +34,7 @@ const setupPages = app => {
       shortURL: req.params.shortURL,
       longURL: urls.get(req.params.shortURL).longURL,
       userID: req.cookies.userID,
-      users: users
+      users: users.get()
     };
     res.render('urls_show', templateVars);
   });
