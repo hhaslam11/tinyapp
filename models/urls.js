@@ -55,10 +55,10 @@ const get = key => {
  */
 const urlsForUser = id => {
   const returnArr = [];
-  for (const key of urls) {
+  for (const key in urls) {
     if (urls[key].userID === id) returnArr.push(key);
   }
-  return returnArr();
+  return returnArr;
 };
 
-module.exports = { create, edit, remove, get };
+module.exports = { create, edit, remove, get, urlsForUser };

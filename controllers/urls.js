@@ -10,9 +10,10 @@ const setupPages = app => {
   //urls page. lists all urls, gives option to edit/delete
   app.get('/urls', (req, res) => {
     const templateVars = {
-      urls: urls.get(),
+      urls: urls.urlsForUser(req.cookies.userID),
       userID: req.cookies.userID,
-      users: users.get()
+      users: users.get(),
+      urlDatabase: urls.get()
     };
     res.render('urls_index', templateVars);
   });
@@ -75,7 +76,7 @@ const setupPages = app => {
   app.post('/urls', (req, res) => {
     if (req.cookies.userID) {
       const uid = generateUID(6);
-      urls.create(uid, req.body.longURL);
+      urls.create(uid, req.body.longURL, req.cookies.userID);
       res.redirect(`/urls/${uid}`);
     } else {
       res.sendStatus(403);
