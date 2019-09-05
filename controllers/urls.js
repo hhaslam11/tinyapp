@@ -26,6 +26,11 @@ const setupPages = app => {
 
   //shows specific url, lets user edit it from here
   app.get('/urls/:shortURL', (req, res) => {
+    //TODO make sure :shortURL exists before rendering
+    if (!urls.get(req.params.shortURL)) {
+      res.redirect('/urls/');
+      return;
+    }
     const templateVars = {
       shortURL: req.params.shortURL,
       longURL: urls.get(req.params.shortURL).longURL,
