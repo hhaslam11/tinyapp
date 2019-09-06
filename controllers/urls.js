@@ -56,7 +56,8 @@ router.get('/urls/:shortURL', (req, res) => {
     longURL: urls.get(req.params.shortURL).longURL,
     userID: req.session.userID,
     permission: permission,
-    users: users.get()
+    users: users.get(),
+    visitLog: urls.getVisitLog(req.params.shortURL)
   };
   res.render('urls_show', templateVars);
 });
@@ -74,6 +75,9 @@ router.get('/u/:url', (req, res) => {
     
     //if clientID is not already in the array, then add it.
     if (!urls.getClientArray(url).includes(req.session.clientID)) urls.addClientId(url, req.session.clientID);
+
+    //add visitLog to urldatabase
+    urls.addVisitLog(url, req.session.clientID);
     
     res.redirect(urls.get(url).longURL);
 

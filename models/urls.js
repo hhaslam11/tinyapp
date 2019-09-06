@@ -11,7 +11,8 @@ const create = (shortURL, longURL, userID) => {
     longURL: longURL,
     userID: userID,
     timesClicked: 0,
-    clientIds: []
+    clientIds: [],
+    visitLog: []
   };
 };
 
@@ -121,5 +122,31 @@ const getUniqueVisiters = id => {
   }
 };
 
+/**
+ * @param {string} id the id of the url that you want to get visitLog from
+ * @returns the visitLog array
+ */
+const getVisitLog = id => {
+  if (urls[id]) {
+    return urls[id].visitLog;
+  } else {
+    return undefined;
+  }
+};
 
-module.exports = { create, edit, remove, get, urlsForUser, addClick, getClicks, getClientArray, addClientId, getUniqueVisiters };
+/**
+ * Adds a new visitLog to the array for a given urlID
+ * @param {string} urlID array to push to
+ * @param {string} clientID value to push to the array
+ */
+const addVisitLog = (urlID, clientID) => {
+  if (urls[urlID]) {
+    urls[urlID].visitLog.push({
+      clientID: clientID,
+      date: Date()
+    });
+  }
+};
+
+
+module.exports = { create, edit, remove, get, urlsForUser, addClick, getClicks, getClientArray, addClientId, getUniqueVisiters, addVisitLog, getVisitLog };
