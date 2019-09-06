@@ -21,6 +21,11 @@ app.get('/', (req, res) => {
 //routers
 app.use(require('./controllers'));
 
+//catch 404's
+app.get('*', (req, res) => {
+  res.redirect('/urls/new?error=404');
+});
+
 //starts listening
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);

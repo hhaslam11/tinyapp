@@ -24,7 +24,8 @@ router.get('/urls', (req, res) => {
 router.get('/urls/new', (req, res) => {
   const templateVars = {
     userID: req.session.userID,
-    users: users.get()
+    users: users.get(),
+    query: req.query
   };
   res.render('urls_new', templateVars);
 });
