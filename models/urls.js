@@ -9,7 +9,8 @@ const urls = require('../database/urls');
 const create = (shortURL, longURL, userID) => {
   urls[shortURL] = {
     longURL: longURL,
-    userID: userID
+    userID: userID,
+    timesClicked: 0
   };
 };
 
@@ -61,4 +62,26 @@ const urlsForUser = id => {
   return returnArr;
 };
 
-module.exports = { create, edit, remove, get, urlsForUser };
+/**
+ * increments the timesClicked value on a specific url
+ * @param {string} id shortURL that is being clicked
+ */
+const addClick = id => {
+  if (urls[id]) {
+    urls[id].timesClicked++;
+  }
+};
+
+/**
+ * @param {string} id the requested shortURL
+ * @returns the amount of clicks the link has recieved
+ * @returns undefined if invalid id is passed in
+ */
+const getClicks = id => {
+  if (urls[id]) {
+    return urls[id].timesClicked;
+  } else {
+    return undefined;
+  }
+};
+module.exports = { create, edit, remove, get, urlsForUser, addClick, getClicks };

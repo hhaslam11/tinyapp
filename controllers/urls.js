@@ -14,7 +14,7 @@ router.get('/urls', (req, res) => {
     urls: urls.urlsForUser(req.session.userID),
     userID: req.session.userID,
     users: users.get(),
-    urlDatabase: urls.get()
+    urlDatabase: urls.get(),
   };
   res.render('urls_index', templateVars);
 });
@@ -54,6 +54,7 @@ router.get('/urls/:shortURL', (req, res) => {
 router.get('/u/:url', (req, res) => {
   if (urls.get(req.params.url)) {
     res.redirect(urls.get(req.params.url).longURL);
+    urls.addClick(req.params.url);
   } else {
     res.redirect('/urls/new?error=noUrl');
   }
