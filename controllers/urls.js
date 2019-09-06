@@ -40,6 +40,7 @@ router.get('/urls/:shortURL', (req, res) => {
     shortURL: req.params.shortURL,
     longURL: urls.get(req.params.shortURL).longURL,
     userID: req.session.userID,
+    permission: (urls.get(req.params.shortURL).userID === req.session.userID),
     users: users.get()
   };
   res.render('urls_show', templateVars);
@@ -70,7 +71,7 @@ router.post('/urls/:shortURL/delete', (req, res) => {
 
 //edits existing url
 router.post('/urls/:id', (req, res) => {
-  if (req.session.userID) {
+  if (urls.get(req.params.id).userID === req.session.userID) {
     urls.edit(req.params.id, req.body.longURL);
     res.redirect('/urls');
   } else {
