@@ -21,6 +21,11 @@ app.get('/', (req, res) => {
 //routers
 app.use(require('./controllers'));
 
+//catch favicon from getting redirected
+app.get('/favicon.ico', (req, res) => {
+  res.sendStatus(404);
+});
+
 //catch 404's
 app.get('*', (req, res) => {
   res.redirect('/urls/new?error=404');
