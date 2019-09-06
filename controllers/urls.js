@@ -2,13 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const users = require('../models/users');
-const generateUID = require('../helpers/generateUID');
 const urls = require('../models/urls');
+const generateUID = require('../helpers/generateUID');
 
 // ===============================================
 // ||               Get requests                ||
 // ===============================================
-
 //urls page. lists all urls, gives option to edit/delete
 router.get('/urls', (req, res) => {
   const templateVars = {
@@ -32,15 +31,20 @@ router.get('/urls/new', (req, res) => {
 
 //shows specific url, lets user edit it from here
 router.get('/urls/:shortURL', (req, res) => {
+
+  //redirects back to /urls if the shortURL doesnt exist
   if (!urls.get(req.params.shortURL)) {
     res.redirect('/urls/');
     return;
   }
+
+  //check if user has permission to edit the url
+  const permission = urls.get(req.params.shortURL).userID === req.session.userID;
   const templateVars = {
     shortURL: req.params.shortURL,
     longURL: urls.get(req.params.shortURL).longURL,
     userID: req.session.userID,
-    permission: (urls.get(req.params.shortURL).userID === req.session.userID),
+    permission: permission,
     users: users.get()
   };
   res.render('urls_show', templateVars);
@@ -58,7 +62,6 @@ router.get('/u/:url', (req, res) => {
 // ===============================================
 // ||               Post requests               ||
 // ===============================================
-
 // deletes url
 router.post('/urls/:shortURL/delete', (req, res) => {
   if (req.session.userID) {
@@ -89,6 +92,5 @@ router.post('/urls', (req, res) => {
     res.sendStatus(403);
   }
 });
-
 
 module.exports = router;

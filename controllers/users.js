@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-const generateUID = require('../helpers/generateUID');
 const bcrypt = require('bcrypt');
 const users = require('../models/users');
-
+const generateUID = require('../helpers/generateUID');
 
 // ===============================================
 // ||               Get requests                ||
 // ===============================================
 //user registration page
 router.get('/register', (req, res) => {
+  //redirect to /urls if user is already logged in
   if (req.session.userID) {
     res.redirect('/urls');
     return;
@@ -25,6 +25,7 @@ router.get('/register', (req, res) => {
 
 //login page
 router.get('/login', (req, res) => {
+  //redirect to /urls if user is already logged in
   if (req.session.userID) {
     res.redirect('/urls');
     return;
@@ -59,16 +60,20 @@ router.post('/logout', (req, res) => {
 
 //register new user
 router.post('/register', (req, res) => {
+
   if (!req.body.email || !req.body.password) {
     res.redirect('/register?failed=true');
+    
   } else if (users.searchByEmail(req.body.email)) {
     res.redirect('/register?failed=true');
+
   } else {
     const uid = generateUID(6);
     users.register(uid, req.body.email, bcrypt.hashSync(req.body.password, 10));
     req.session.userID = uid;
     res.redirect('/urls');
   }
+
 });
 
 module.exports = router;
