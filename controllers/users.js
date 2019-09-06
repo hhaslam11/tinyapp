@@ -11,6 +11,10 @@ const users = require('../models/users');
 // ===============================================
 //user registration page
 router.get('/register', (req, res) => {
+  if (req.session.userID) {
+    res.redirect('/urls');
+    return;
+  }
   const templateVars = {
     userID: req.session.userID,
     users: users.get(),
@@ -21,6 +25,10 @@ router.get('/register', (req, res) => {
 
 //login page
 router.get('/login', (req, res) => {
+  if (req.session.userID) {
+    res.redirect('/urls');
+    return;
+  }
   const templateVars = {
     userID: req.session.userID,
     users: users.get(),
