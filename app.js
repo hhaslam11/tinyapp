@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
   res.redirect('/urls/new');
 });
 
+//routers
 app.use(require('./controllers'));
 
 //starts listening

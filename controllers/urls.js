@@ -31,7 +31,6 @@ router.get('/urls/new', (req, res) => {
 
 //shows specific url, lets user edit it from here
 router.get('/urls/:shortURL', (req, res) => {
-  //TODO make sure :shortURL exists before rendering
   if (!urls.get(req.params.shortURL)) {
     res.redirect('/urls/');
     return;
