@@ -47,7 +47,11 @@ router.get('/urls/:shortURL', (req, res) => {
 
 //redirect user to full url
 router.get('/u/:url', (req, res) => {
-  res.redirect(urls.get(req.params.url).longURL);
+  if (urls.get(req.params.url)) {
+    res.redirect(urls.get(req.params.url).longURL);
+  } else {
+    res.redirect('/urls/new?error=noUrl');
+  }
 });
 
 // ===============================================
