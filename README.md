@@ -16,6 +16,8 @@ Features
  - Login/register system
  - See all your created links
  - Create/edit/delete your own links
+ - See how many times your link have been clicked
+ - See how many unique users have clicked your link
  
 
 Installing
