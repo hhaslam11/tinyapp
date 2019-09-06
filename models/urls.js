@@ -10,7 +10,8 @@ const create = (shortURL, longURL, userID) => {
   urls[shortURL] = {
     longURL: longURL,
     userID: userID,
-    timesClicked: 0
+    timesClicked: 0,
+    clientIds: []
   };
 };
 
@@ -84,4 +85,41 @@ const getClicks = id => {
     return undefined;
   }
 };
-module.exports = { create, edit, remove, get, urlsForUser, addClick, getClicks };
+
+/**
+ * @param {string} id the id of the url that you want to get clientArray from
+ * @returns the clientId array
+ */
+const getClientArray = id => {
+  if (urls[id]) {
+    return urls[id].clientIds;
+  } else {
+    return undefined;
+  }
+};
+
+/**
+ * Adds a new clientID to the array for a given urlID
+ * @param {string} urlID array to push to
+ * @param {string} clientID value to push to the array
+ */
+const addClientId = (urlID, clientID) => {
+  if (urls[urlID]) {
+    urls[urlID].clientIds.push(clientID);
+  }
+};
+
+/**
+ * @param {string} id
+ * @returns the amount of unique visiters for a given url (based off the clientIds array)
+ */
+const getUniqueVisiters = id => {
+  if (urls[id]) {
+    return urls[id].clientIds.length;
+  } else {
+    return undefined;
+  }
+};
+
+
+module.exports = { create, edit, remove, get, urlsForUser, addClick, getClicks, getClientArray, addClientId, getUniqueVisiters };

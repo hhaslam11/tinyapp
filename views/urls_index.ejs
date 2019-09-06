@@ -19,6 +19,7 @@
           <th scope="col">Short URL</th>
           <th scope="col">Long URL</th>
           <th scope="col">Times clicked</th>
+          <th scope="col">Unique visiters</th>
           <th scope="col"></th>
           <th scope="col"></th>
         </tr>
@@ -29,6 +30,7 @@
             <td><%= key %></td>
             <td><%= urlDB[key].longURL %></td>
             <td><%= urlDB[key].clicked%></td>
+            <td><%= urlDB[key].uniqueVisiters%></td>
             <td>
               <form class="form-inline" action="/urls/<%= key %>" method="GET">
                 <button type="delete" class="btn btn-warning">Edit</button>

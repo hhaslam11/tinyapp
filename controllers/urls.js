@@ -18,7 +18,8 @@ router.get('/urls', (req, res) => {
   for (let urlKey of urls.urlsForUser(req.session.userID)) {
     urlDB[urlKey] = {
       longURL: urls.get(urlKey).longURL,
-      clicked: urls.getClicks(urlKey)
+      clicked: urls.getClicks(urlKey),
+      uniqueVisiters: urls.getUniqueVisiters(urlKey)
     };
   }
   const templateVars = {
@@ -62,9 +63,20 @@ router.get('/urls/:shortURL', (req, res) => {
 
 //redirect user to full url
 router.get('/u/:url', (req, res) => {
-  if (urls.get(req.params.url)) {
-    res.redirect(urls.get(req.params.url).longURL);
-    urls.addClick(req.params.url);
+
+  const url = req.params.url;
+
+  if (urls.get(url)) {
+    urls.addClick(url);
+    
+    //create new clientID cookie if user doesnt already have one
+    if (!req.session.clientID) req.session.clientID = generateUID(10);
+    
+    //if clientID is not already in the array, then add it.
+    if (!urls.getClientArray(url).includes(req.session.clientID)) urls.addClientId(url, req.session.clientID);
+    
+    res.redirect(urls.get(url).longURL);
+
   } else {
     res.redirect('/urls/new?error=noUrl');
   }
