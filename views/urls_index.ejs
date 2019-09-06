@@ -18,22 +18,24 @@
         <tr>
           <th scope="col">Short URL</th>
           <th scope="col">Long URL</th>
+          <th scope="col">Times clicked</th>
           <th scope="col"></th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
-        <% for(let urlKey of urls) { %>
+        <% for(let key in urlDB) { %>
           <tr>
-            <td><%= urlKey %></td>
-            <td><%= urlDatabase[urlKey].longURL %></td>
+            <td><%= key %></td>
+            <td><%= urlDB[key].longURL %></td>
+            <td><%= urlDB[key].clicked%></td>
             <td>
-              <form class="form-inline" action="/urls/<%= urlKey %>" method="GET">
+              <form class="form-inline" action="/urls/<%= key %>" method="GET">
                 <button type="delete" class="btn btn-warning">Edit</button>
               </form>
             </td>
             <td>
-              <form class="form-inline" action="/urls/<%= urlKey %>/delete" method="POST">
+              <form class="form-inline" action="/urls/<%= key %>/delete" method="POST">
                 <button type="delete" class="btn btn-danger">Delete</button>
               </form>
             </td>

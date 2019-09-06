@@ -10,11 +10,21 @@ const generateUID = require('../helpers/generateUID');
 // ===============================================
 //urls page. lists all urls, gives option to edit/delete
 router.get('/urls', (req, res) => {
+
+  //filter through urls that the user has access to, and
+  //adds required info to a seperate object (urlDB) for
+  //reading in urls_index.ejs
+  const urlDB = {};
+  for (let urlKey of urls.urlsForUser(req.session.userID)) {
+    urlDB[urlKey] = {
+      longURL: urls.get(urlKey).longURL,
+      clicked: urls.getClicks(urlKey)
+    };
+  }
   const templateVars = {
-    urls: urls.urlsForUser(req.session.userID),
     userID: req.session.userID,
     users: users.get(),
-    urlDatabase: urls.get(),
+    urlDB: urlDB
   };
   res.render('urls_index', templateVars);
 });
