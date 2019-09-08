@@ -8,7 +8,7 @@ Tinyapp is a URL minifier, similar to [Bitly](https://bitly.com/). You enter a f
 This project is part of the [Lighthouse Labs bootcamp](https://www.lighthouselabs.ca/web-bootcamp) curriculum, the focus is on learning how to use http, cookies, and create a server in [nodejs](https://nodejs.org)
 _Warning: Databases were not a part of this project, the "databases" here are just objects stored in memory. See Disclaimers for more information_
 
-<a href="https://postimg.cc/qzXkZ70X" target="_blank"><img src="https://i.postimg.cc/xTBc8k47/Screenshot-2019-09-05-New-URL-Tiny-App-Example.png" alt="Screenshot-2019-09-05-New-URL-Tiny-App-Example"/></a> <a href="https://postimg.cc/HrYpGCkG" target="_blank"><img src="https://i.postimg.cc/qvng3Jf7/Screenshot-2019-09-05-Tiny-App.png" alt="Screenshot-2019-09-05-Tiny-App"/></a> <a href="https://postimg.cc/K4TcBNHW" target="_blank"><img src="https://i.postimg.cc/KcqKXprm/Screenshot-2019-09-05-URL-Tiny-App-Example.png" alt="Screenshot-2019-09-05-URL-Tiny-App-Example"/></a> 
+<a href="https://postimg.cc/qzXkZ70X" target="_blank"><img src="https://i.postimg.cc/xTBc8k47/Screenshot-2019-09-05-New-URL-Tiny-App-Example.png" alt="Screenshot-2019-09-05-New-URL-Tiny-App-Example"/></a><a href="https://postimg.cc/2qHg6szL" target="_blank"><img src="https://i.postimg.cc/B6s3h3kp/Screenshot-2019-09-06-Tiny-App-nso40x.png" alt="Screenshot-2019-09-06-Tiny-App-nso40x"/></a> <a href="https://postimg.cc/wtxS9qdd" target="_blank"><img src="https://i.postimg.cc/KYtFrjq4/Screenshot-2019-09-06-Tiny-App-Url-s.png" alt="Screenshot-2019-09-06-Tiny-App-Url-s"/></a> 
 
 Features
 =
@@ -18,6 +18,7 @@ Features
  - Create/edit/delete your own links
  - See how many times your link have been clicked
  - See how many unique users have clicked your link
+ - Keep track of when/how often your links are clicked
  
 
 Installing
