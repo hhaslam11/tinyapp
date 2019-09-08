@@ -10,6 +10,7 @@ const PORT = 8080;
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
+app.use(express.static('public'));
 app.use(cookieSession({
   name: 'session',
   keys: ['3124521']
