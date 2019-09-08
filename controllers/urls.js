@@ -90,7 +90,7 @@ router.get('/u/:url', (req, res) => {
 // ||               Post requests               ||
 // ===============================================
 // deletes url
-router.post('/urls/:shortURL/delete', (req, res) => {
+router.delete('/urls/:shortURL', (req, res) => {
   if (req.session.userID) {
     urls.remove(req.params.shortURL);
     res.redirect('/urls');
@@ -100,7 +100,7 @@ router.post('/urls/:shortURL/delete', (req, res) => {
 });
 
 //edits existing url
-router.post('/urls/:id', (req, res) => {
+router.patch('/urls/:id', (req, res) => {
   if (urls.get(req.params.id).userID === req.session.userID) {
     urls.edit(req.params.id, req.body.longURL);
     res.redirect('/urls');
@@ -110,7 +110,7 @@ router.post('/urls/:id', (req, res) => {
 });
 
 //creates new url
-router.post('/urls', (req, res) => {
+router.put('/urls', (req, res) => {
   if (req.session.userID) {
     const uid = generateUID(6);
     urls.create(uid, req.body.longURL, req.session.userID);

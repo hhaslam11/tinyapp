@@ -33,11 +33,11 @@
             <td><%= urlDB[key].uniqueVisiters%></td>
             <td>
               <form class="form-inline" action="/urls/<%= key %>" method="GET">
-                <button type="delete" class="btn btn-warning">Edit</button>
+                <button type="edit" class="btn btn-warning">Edit</button>
               </form>
             </td>
             <td>
-              <form class="form-inline" action="/urls/<%= key %>/delete" method="POST">
+              <form class="form-inline" action="/urls/<%= key %>?_method=DELETE" method="POST">
                 <button type="delete" class="btn btn-danger">Delete</button>
               </form>
             </td>

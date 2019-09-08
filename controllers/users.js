@@ -59,7 +59,7 @@ router.post('/logout', (req, res) => {
 });
 
 //register new user
-router.post('/register', (req, res) => {
+router.put('/register', (req, res) => {
 
   if (!req.body.email || !req.body.password) {
     res.redirect('/register?failed=true');
